@@ -3,7 +3,7 @@
 
   <fieldset class="group">
     <label for="plan">Valor do plano:</label>
-    <select [(ngModel)]="plan" name="plan" type="number" class="plan">
+    <select [(ngModel)]="plan" id="plan" name="plan" type="number" class="plan">
         <option selected disabled>Selecione um plano &#9660;</option>
         <option value="70">70</option>
         <option value="80">80</option>
@@ -21,12 +21,12 @@
 
   <fieldset class="group">
       <label>Vencimento atual:</label>
-         <input [(ngModel)]="date" name="date" type="date" class="date">
+         <input [(ngModel)]="date" id="date" name="date" type="date" class="date">
   </fieldset>
 
   <fieldset class="group">
         <label for="newDate">Vencimento solicitado:</label>
-        <select [(ngModel)]="Rdate" name="newDate" type="number" class="newDate">
+        <select [(ngModel)]="Rdate" id="newDate" name="newDate" type="number" class="newDate">
             <option selected disabled>Novo vencimento &#9660;</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -36,13 +36,13 @@
 
   <fieldset class="group">
       <label>Boletos cancelados:</label>
-          <input [(ngModel)]="paper" name="paper" type="number" class="paper" placeholder="Opcional">
+          <input [(ngModel)]="paper" id="paper" name="paper" type="number" class="paper" placeholder="Opcional">
 
   </fieldset >
 
   <fieldset class="group finalResult">
       <label for="resultField">Resultado:</label>
-          <textarea [(ngModel)]="resultField" #resultTextarea name="resultField" rows="10" cols="60" class="result"></textarea>
+          <textarea [(ngModel)]="resultField" #resultTextarea id="resultField" name="resultField" rows="10" cols="60" class="result"></textarea>
 
   </fieldset>
 
