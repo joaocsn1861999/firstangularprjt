@@ -21,12 +21,6 @@ export class DateChangingComponent implements OnInit {
   }
 
   mudaVencimento(): string {
-    let paperToCancel = 0;
-    let paper = this.paper;
-    if (paper !== "" && paper !== "e" ){
-      paperToCancel = parseInt(paper)
-    }
-
     console.log(this.newDate(this.rMonth()).toLocaleDateString('pt-BR'))
     console.log(this.daysValue())
     console.log(this.accessDays())
@@ -43,15 +37,15 @@ export class DateChangingComponent implements OnInit {
 
 Primeira opção:
 ${this.newDate(this.rMonth()).toLocaleDateString('pt-BR')
-} – R$${this.daysValue()+paperToCancel} referente aos dias de acesso ${this.paperToPay()
-} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)}
+} – R$${this.daysValue()+this.paperToCancel()},00 referente aos dias de acesso ${this.paperToPay()
+} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00).
+${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)},00
 
 Segunda opção:
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.daysValue()+paperToCancel+parseInt(this.plan)
-} referente aos dias de acesso + mensalidade ${this.paperToPay()
+${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.daysValue()+this.paperToCancel()+parseInt(this.plan)
+},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
 } (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
-${this.newDate(this.rMonth()+2).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)}`
+${this.newDate(this.rMonth()+2).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)},00`
 
 } else if(this.accessDays() > 0 &&
           parseInt(this.plan) >= 70 &&
@@ -63,10 +57,10 @@ ${this.newDate(this.rMonth()+2).toLocaleDateString('pt-BR')} – R$${parseInt(th
   return this.resultField =
             `Sobre possível mudança de vencimento, podemos fazer da seguinte forma:
 
-${this.newDate(this.rMonth()).toLocaleDateString('pt-BR')} – R$${this.daysValue()+paperToCancel+this.plan
-} referente aos dias de acesso + mensalidade ${this.paperToPay()
+${this.newDate(this.rMonth()).toLocaleDateString('pt-BR')} – R$${this.daysValue()+this.paperToCancel()+parseInt(this.plan)
+},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
 } (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.plan}`
+${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.plan},00`
 }
 else {
   return this.resultField =`Calculo não pôde ser realizado...Por favor, verifique se os valores estão corretos.`
@@ -80,6 +74,17 @@ else {
     }
 
     return conditionalString
+  }
+
+  paperToCancel():number{
+    let paperToCancel = 0;
+    let paper = this.paper;
+
+    if (paper !== "" && paper !== "e" ){
+      paperToCancel = parseInt(paper)
+    }
+
+    return paperToCancel
   }
 
   dateParts(): number[]{
@@ -123,7 +128,17 @@ else {
         multiplier = this.accessDays();
       }
 
-    return multiplier * dayValue;
+      const fullValue = multiplier * dayValue;
+      let daysValue = fullValue.toFixed(2);
+      const temp = daysValue.split('.').map(Number);
+
+      if (temp[1] < 50){
+        daysValue = `${temp[0]}`
+      } else {
+        daysValue = `${temp[0] + 1}`
+        }
+
+      return parseInt(daysValue);
   }
 
   accessDays():number {

@@ -20,13 +20,23 @@ export class DaysValueCalculatorComponent implements OnInit {
     this.resultField =
         `O valor referente a ${
             this.days} dias de acesso do plano de R$${
-            this.plan} fica um total de R$${result}`;
+            this.plan},00 fica um total de R$${result},00`;
   }
 
   daysValue() {
-    let result = 0;
     const dayValue = parseFloat(this.plan)/30;
-    return result = dayValue*parseFloat(this.days);
+
+    const fullValue = dayValue*parseFloat(this.days);
+      let daysValue = fullValue.toFixed(2);
+      const temp = daysValue.split('.').map(Number);
+
+      if (temp[1] < 50){
+        daysValue = `${temp[0]}`
+      } else {
+        daysValue = `${temp[0] + 1}`
+        }
+
+      return parseInt(daysValue);
   }
 
   fieldClenear() {
@@ -57,7 +67,7 @@ export class DaysValueCalculatorComponent implements OnInit {
         return this.resultField =
             `Quantidade de dias(${
             this.days}) ou plano(R$${
-            this.plan}) está invalida! Verifique e tente novamente, por favor.`;
+            this.plan},00) está invalida! Verifique e tente novamente, por favor.`;
         }
     }
 

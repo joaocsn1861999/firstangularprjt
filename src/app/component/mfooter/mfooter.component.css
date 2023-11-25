@@ -1,6 +1,6 @@
 footer {
   font-family: 'Montserrat', sans-serif;
-  background-color: var(--halfwhite);
+  background: var(--mainBackG);
   color: var(--mainBlack);
   font-size: 14px;
   font-weight: 200;
