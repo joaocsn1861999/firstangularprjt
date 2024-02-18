@@ -25,18 +25,17 @@ export class DaysValueCalculatorComponent implements OnInit {
 
   daysValue() {
     const dayValue = parseFloat(this.plan)/30;
-
     const fullValue = dayValue*parseFloat(this.days);
-      let daysValue = fullValue.toFixed(2);
-      const temp = daysValue.split('.').map(Number);
+    let daysValue = fullValue.toFixed(2);
+    const temp = daysValue.split('.').map(Number);
 
-      if (temp[1] < 50){
-        daysValue = `${temp[0]}`
-      } else {
-        daysValue = `${temp[0] + 1}`
-        }
+    if (temp[1] < 50){
+      daysValue = `${temp[0]}`
+    } else {
+      daysValue = `${temp[0] + 1}`
+      }
 
-      return parseInt(daysValue);
+    return parseInt(daysValue);
   }
 
   fieldClenear() {
@@ -47,20 +46,19 @@ export class DaysValueCalculatorComponent implements OnInit {
 
   daysCalculator() {
     if (parseInt(this.days) > 1 && parseInt(this.plan) >= 70) {
-        let caculate = true;
-        if (parseInt(this.days) < 10) {
-            var confirmation = confirm(
-                'Menos de 10 dias não é necessário cobrança em muitos casos,'
-                 + ' você tem certeza que deseja calcular?'
+      let caculate = true;
+      if (parseInt(this.days) < 10) {
+        var confirmation = confirm(
+          'Menos de 10 dias não é necessário cobrança em muitos casos,'
+          +' você tem certeza que deseja calcular?'
             );
             caculate = confirmation;
         }
-        if (caculate === true) {
-            return this.sucessResult(this.daysValue());
-    } else {
+      if (caculate === true) {
+        return this.sucessResult(this.daysValue());
+      } else {
         this.fieldClenear();
-        return  this.resultField =
-            `Calculo não realizado... :C`;
+        return  this.resultField = `Calculo não realizado... :C`;
         }
     } else {
         this.fieldClenear();
@@ -73,19 +71,15 @@ export class DaysValueCalculatorComponent implements OnInit {
 
     copyResult() {
       const textareaElement: HTMLTextAreaElement = this.resultTextarea.nativeElement;
+      textareaElement.select();
 
-    // Selecionar o texto no textarea
-    textareaElement.select();
+      try {
+        document.execCommand('copy');
+        console.log('Texto copiado com sucesso!');
+      } catch (err) {
+        console.error('Erro ao copiar o texto:', err);
+      }
 
-    try {
-      // Tenta copiar o texto para a área de transferência
-      document.execCommand('copy');
-      console.log('Texto copiado com sucesso!');
-    } catch (err) {
-      console.error('Erro ao copiar o texto:', err);
-    }
-
-    // Deselecionar o texto
-    textareaElement.setSelectionRange(0, 0);
+      textareaElement.setSelectionRange(0, 0);
     }
 }

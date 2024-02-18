@@ -1,5 +1,5 @@
 <form class="form">
-  <h1 class="titlte">Calcular mudança de vencimento</h1>
+  <h1 class="title">Calcular mudança de vencimento</h1>
 
   <fieldset class="group">
     <label for="plan">Valor do plano:</label>
@@ -20,7 +20,7 @@
 </fieldset >
 
   <fieldset class="group">
-      <label>Vencimento atual:</label>
+      <label for="date">Vencimento atual:</label>
          <input [(ngModel)]="date" id="date" name="date" type="date" class="date">
   </fieldset>
 
@@ -35,7 +35,7 @@
   </fieldset >
 
   <fieldset class="group">
-      <label>Boletos cancelados:</label>
+      <label for="paper">Boletos cancelados:</label>
           <input [(ngModel)]="paper" id="paper" name="paper" type="number" class="paper" placeholder="Opcional">
 
   </fieldset >
@@ -47,7 +47,7 @@
   </fieldset>
 
   <div class="buttonArea">
-      <button (click)="mudaVencimento()" type="button" class="button buttonChangeDate">Calcular vencimento</button>
+      <button (click)="showResult()" type="button" class="button buttonChangeDate">Calcular vencimento</button>
       <button (click)="copyResult()" type="button" class="button buttonCopy">Copiar</button>
       <button (click)="fieldClenear()" type="button" class="button buttonClear">Limpar</button>
   </div>

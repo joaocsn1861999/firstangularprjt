@@ -20,54 +20,23 @@ export class DateChangingComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  mudaVencimento(): string {
-    console.log(this.newDate(this.rMonth()).toLocaleDateString('pt-BR'))
+  public showResult():string {
+    console.log(this.newDate())
     console.log(this.daysValue())
-    console.log(this.accessDays())
+    console.log(this.daysDiff())
 
-    if (this.accessDays() > 0 &&
-        parseInt(this.plan) >= 70 &&
-        parseInt(this.plan) <= 250 &&
-        this.rMonth() === 0 &&
-        this.dateParts()[2] === 10 ||
-        this.dateParts()[2] === 20 ||
-        this.dateParts()[2] === 30) {
-      return this.resultField =
-            `Sobre possível mudança de vencimento, terá duas opções para a sua situação financeira:
-
-Primeira opção:
-${this.newDate(this.rMonth()).toLocaleDateString('pt-BR')
-} – R$${this.daysValue()+this.paperToCancel()},00 referente aos dias de acesso ${this.paperToPay()
-} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00).
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)},00
-
-Segunda opção:
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.daysValue()+this.paperToCancel()+parseInt(this.plan)
-},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
-} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
-${this.newDate(this.rMonth()+2).toLocaleDateString('pt-BR')} – R$${parseInt(this.plan)},00`
-
-} else if(this.accessDays() > 0 &&
-          parseInt(this.plan) >= 70 &&
-          parseInt(this.plan) <= 250 &&
-          this.rMonth() === 1 &&
-          this.dateParts()[2] === 10 ||
-          this.dateParts()[2] === 20 ||
-          this.dateParts()[2] === 30) {
-  return this.resultField =
-            `Sobre possível mudança de vencimento, podemos fazer da seguinte forma:
-
-${this.newDate(this.rMonth()).toLocaleDateString('pt-BR')} – R$${this.daysValue()+this.paperToCancel()+parseInt(this.plan)
-},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
-} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
-${this.newDate(this.rMonth()+1).toLocaleDateString('pt-BR')} – R$${this.plan},00`
-}
-else {
-  return this.resultField =`Calculo não pôde ser realizado...Por favor, verifique se os valores estão corretos.`
+    if (this.hableToCalculate(
+          this.daysDiff(),
+          this.dateParts()[2],
+          this.dateParts()[1]) === true)
+      {
+      return this.resultField = this.getResult()
+    } else {
+      return this.resultField =`Calculo não pôde ser realizado...Por favor, verifique se os valores estão corretos.`
    }
 }
 
-  paperToPay():string {
+  private paperToPay():string{
     let conditionalString = ''
     if(parseInt(this.paper) > 0){
       conditionalString = '+ cancelamento de boletos registrados';
@@ -76,7 +45,7 @@ else {
     return conditionalString
   }
 
-  paperToCancel():number{
+  private paperToCancel():number{
     let paperToCancel = 0;
     let paper = this.paper;
 
@@ -87,98 +56,169 @@ else {
     return paperToCancel
   }
 
-  dateParts(): number[]{
+  //return an array [0 = year, 1 = month, 2 = day]
+  private dateParts():number[]{
     let dateArr = this.date.split('-').map(Number);
     return dateArr
   }
 
-  newDate(addMonths: number):Date {
-    const data = new Date(this.dateParts()[0], this.dateParts()[1]-1, this.dateParts()[2]);
-    data.setDate(parseInt(this.Rdate));
-    data.setMonth(this.dateParts()[1]+(addMonths-1));
+  //return the new date of payment - NEED FIX
+  private newDate(addMonth?:number):string{
+    let day = parseInt(this.Rdate);
+    let month = (this.dateParts()[1]);
+    if (this.nextMonth() === false){
+        month = month -1
+    };
+    if (addMonth){
+      month = month + addMonth
+    };
+    if (
+      month === 1 && day === 30 ||
+      month === 13 && day === 30)
+      {
+        month = month +1;
+        day = 0;
+    }
 
-    return data
+    return new Date(this.dateParts()[0], month, day).toLocaleDateString('pt-BR');
   }
 
-  rMonth():number{
-    let addMonth = 0
-    let nDate = parseInt(this.Rdate)
+  //Says if the date can be only in the next month or not
+  private nextMonth():boolean{
+    let nextMonth = false
     const todayDate = new Date()
     const today = todayDate.getDate()
-    if( nDate < today ) { addMonth = 1 }
+    if( parseInt(this.Rdate) < today ) { nextMonth = true }
 
-    return addMonth
+    return nextMonth
   }
 
-  daysValue():number{
-    const dayValue = parseInt(this.plan)/30;
-    let multiplier = 1;
+  private daysValue():number{
+    const fullValue = this.daysDiff() * (parseInt(this.plan)/30);
 
-    if (
-      this.dateParts()[1] !== 4 &&
-      this.dateParts()[1] !== 9 &&
-      this.dateParts()[1] !== 11 &&
-      this.dateParts()[1] !== 6) {
-        if(this.dateParts()[1] === 2){
-          multiplier = this.accessDays()-2;
-        } else {
-          multiplier = this.accessDays()+1;
-        }
-      } else {
-        multiplier = this.accessDays();
-      }
-
-      const fullValue = multiplier * dayValue;
-      let daysValue = fullValue.toFixed(2);
-      const temp = daysValue.split('.').map(Number);
-
-      if (temp[1] < 50){
-        daysValue = `${temp[0]}`
-      } else {
-        daysValue = `${temp[0] + 1}`
-        }
-
-      return parseInt(daysValue);
+    return Math.round(fullValue);
   }
 
-  accessDays():number {
-    let accessDay = 0;
+  private daysDiff():number{
     const oldDate = this.dateParts()[2];
     const requestDate = parseInt(this.Rdate);
 
+    const todayDate = new Date();
+    const currentlyDay = todayDate.getDate();
+    const monthLastDay = new Date( todayDate.getFullYear(), todayDate.getMonth() +1, 0)
+    const lastDay = monthLastDay.getDate()
+
+    let daysDiff = 0;
+
     if (oldDate != requestDate) {
-        if (
-          oldDate === 10 && requestDate === 20 ||
-          oldDate === 20 && requestDate === 30 ||
-          oldDate === 30 && requestDate === 10) {
-            accessDay = 10;
-        } else {
-          accessDay = 20;
-            }
+      if (this.dateParts()[1] === 2){
+        if(
+          oldDate === 10 || oldDate === 20 &&
+          requestDate === 20 || requestDate === 30
+          ){
+            if (requestDate === 30){
+              daysDiff = lastDay - oldDate
+            } else {
+              daysDiff = 10
+              }
+            } else if(oldDate === 30){
+              daysDiff = requestDate;
+              } else {
+                daysDiff = (lastDay - oldDate) + requestDate;
+                }
+      } else if(
+          oldDate === 10 || oldDate === 20 &&
+          requestDate === 20 || requestDate === 30
+          ){
+            daysDiff = requestDate - oldDate;
+            } else if(oldDate === 30){
+              daysDiff = (lastDay - oldDate) + requestDate;
+              } else {
+                daysDiff = 20;
+                }
     }
 
-    return accessDay;
+    return Math.abs(daysDiff);
   }
 
-  copyResult(){
-    const textareaElement: HTMLTextAreaElement = this.resultTextarea.nativeElement;
+  private dateValidator(day:number, month:number):boolean{
+    let validDate = false;
+    if(day === 10 || day === 20 || day === 30
+      ){
+        validDate = true
+      } else if(day === 29 && month === 2){
+        validDate = true
+      }
+      return validDate
+  }
 
-    // Selecionar o texto no textarea
+  private hableToCalculate(
+    daysDiff:number,
+    currentDate:number,
+    currentMonth:number):boolean{
+
+    let permission = false;
+
+    if(
+      daysDiff > 0 &&
+      this.dateValidator(currentDate,currentMonth) &&
+      parseInt(this.plan) >= 70 &&
+      parseInt(this.plan) <= 250
+      )
+    {
+      return permission = true
+    }
+
+    return permission
+  }
+
+  private getResult():string{
+    const plan = this.plan;
+    const daysValue = this.daysValue();
+    const paperValue = this.paperToCancel();
+    let result:string = '';
+    if (this.nextMonth() === false){
+      result =
+      `Sobre possível mudança de vencimento, terá duas opções para a sua situação financeira:
+
+Primeira opção:
+${this.newDate()} – R$${daysValue+paperValue
+},00 referente aos dias de acesso ${this.paperToPay()
+} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00).
+${this.newDate(1)} – R$${plan},00
+
+Segunda opção:
+${this.newDate(1)} – R$${daysValue+paperValue+parseInt(plan)
+},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
+} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
+${this.newDate(2)} – R$${plan},00`
+    } else {
+      result =
+      `Sobre possível mudança de vencimento, podemos fazer da seguinte forma:
+
+${this.newDate()} – R$${daysValue+paperValue+parseInt(plan)
+},00 referente aos dias de acesso + mensalidade ${this.paperToPay()
+} (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
+${this.newDate(1)} – R$${plan},00`
+    }
+    return result
+  }
+
+  public copyResult():void{
+    const textareaElement: HTMLTextAreaElement = this.resultTextarea.nativeElement;
     textareaElement.select();
 
     try {
-      // Tenta copiar o texto para a área de transferência
       document.execCommand('copy');
       console.log('Texto copiado com sucesso!');
     } catch (err) {
       console.error('Erro ao copiar o texto:', err);
     }
 
-    // Deselecionar o texto
     textareaElement.setSelectionRange(0, 0);
   }
 
-  fieldClenear() {
+  public fieldClenear():void{
     this.plan = "";
     this.date = "";
     this.Rdate = "";

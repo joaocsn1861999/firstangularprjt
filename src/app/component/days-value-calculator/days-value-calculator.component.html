@@ -2,14 +2,14 @@
   <h1 class="title">Calculadora de dias</h1>
 
   <fieldset class="group">
-      <label>Dias de acesso:</label>
-          <input [(ngModel)]="days" name="days" type="number" class="days">
+      <label for="days">Dias de acesso:</label>
+          <input [(ngModel)]="days" id="days" name="days" type="number" class="days">
 
   </fieldset >
 
   <fieldset class="group">
     <label for="plan">Valor do plano:</label>
-    <select [(ngModel)]="plan" name="plan" type="number" class="plan">
+    <select [(ngModel)]="plan" id="plan" name="plan" type="number" class="plan">
         <option selected disabled>Selecione um plano &#9660;</option>
         <option value="70">70</option>
         <option value="80">80</option>
@@ -26,8 +26,8 @@
   </fieldset >
 
   <fieldset class="group finalResult">
-      <label>Resultado:</label>
-          <textarea [(ngModel)]="resultField" #resultTextarea name="resultField" rows="6" cols="56" class="result">
+      <label for="resultField">Resultado:</label>
+          <textarea [(ngModel)]="resultField" #resultTextarea id="resultField" name="resultField" rows="6" cols="56" class="result">
           </textarea>
 
   </fieldset>
