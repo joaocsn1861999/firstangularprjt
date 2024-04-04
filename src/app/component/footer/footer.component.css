@@ -1,0 +1,9 @@
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--mainBackG);
+  color: var(--mainBlack);
+  font-size: 1rem;
+  padding-block: 1em;
+}

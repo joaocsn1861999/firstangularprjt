@@ -1,4 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
 @import '~normalize.css';
+
 :root {
   --red: #e93d50;
   --darkRed: #af303f;
@@ -11,6 +18,7 @@
   --mainBackGInverse: linear-gradient(45deg,#250BE1 0%, #a7cfdf 100%);
   --mainBlack: #000000;
   --shadow:#00000070;
+  --font-darkBlue: #010048;
   --mainFont: 'Montserrat', sans-serif;
 }
 
@@ -18,26 +26,16 @@ body {
   background: var(--mainBackG);
   backdrop-filter: blur(20px);
   font-family: var(--mainFont);
-  position: relative;
-  min-height: 100vh;
-}
-
-main {
-  align-items: center;
-  background: var(--mainBackGInverse);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 1em 10em;
-  padding: 1em;
-  height: 87vh;
-  padding-bottom: 2em;
+  height: 100vh;
+  width: 100vw;
+  transition: .5s;
 }
 
 h1 {
   color: var(--white);
-  margin-bottom: 20px;
+  margin-bottom: 1.3em;
   font-size: 2rem;
+  word-wrap: break-word;
 }
 
 
@@ -78,13 +76,14 @@ input, select, textarea, button {
   display: flex;
   flex-direction: column;
 }
+
 .field label{
   margin-bottom: 0.2em;
   color: var(--white);
   display: block;
 }
 
-fieldset.group .field {
+fieldset .group .field {
   float: left;
   margin-right: 1em;
 }
@@ -108,32 +107,10 @@ fieldset.group .field {
   background: var(--lightBlueBg) ;
 }
 
-.submitButton{
-  font-size: 2em;
-  background: var(--white);
-  border: 0;
-  margin-bottom: 1em;
-  color: var(--lightBlueBg);
-  padding: 0.2em 0.6em;
-  box-shadow: 2px 2px 2px var(--shadow);
-  text-shadow: 1px 1px 1px var(--shadow);
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, 50%);
-}
-
-.submitButton:hover {
-  background: var(--lightBlueBg);
-  box-shadow: inset 2px 2px 2px var(--shadow);
-  color: var(--white);
-}
-
 .buttonArea {
   display: flex;
   justify-content: space-between;
-  padding: 0em 3em;
+  padding-inline: 3em;
 }
 
 .buttonArea button {
@@ -146,13 +123,12 @@ fieldset.group .field {
   padding: 0.2em 0.6em;
   box-shadow: 2px 2px 2px var(--shadow);
   border-radius: 3px;
+  opacity: .7;
 }
 
 .buttonArea button:hover {
-  background: var(--lightBlueBg);
-  color: var(--white);
   border: 1px solid var(--white);
-  text-decoration: underline;
+  opacity: 1;
 }
 
 .buttonArea button:active {
@@ -166,193 +142,65 @@ fieldset.group .field {
   display: inline-block;
 }
 
-@media only screen and (max-height: 390px) {
+@media only screen and (max-width: 768px){
   h1 {
-    font-size: 0.03rem;
-    margin: 0.1em;
-  }
-
-  .group {
-    font-size: 0.01rem;
-    margin: 0.1em;
-  }
-
-  .group label{
-    font-size: 0.01rem;
-    margin: 0.1em;
+    font-size: 1.7rem;
+    text-align: center;
   }
 
   .group input[type="date"], input[type="number"], select {
-    width: 8em;
-    height: 0.85em;
-    font-size: 0.02rem;
-  }
-
-  .buttonArea {
-    font-size: 0.05rem;
-    margin: 0.5em;
+    width: 10em;
   }
 
   textarea {
-    width: 4em;
-    height: 8em;
-    font-size: 0.05rem;
+    width: 25em;
   }
 }
 
-@media only screen and (max-height: 460px) {
-  main { min-height: 95vh}
-  h1 { margin: 0.3em 0 0.1em 0}
-  .group { margin: 0.3em 0 0.1em 0}
-  .buttonArea {font-size: 10px}
-
-  .group label{
-    font-size: 0.5rem;
-    margin: 0.1em;
-  }
-
-  .group input[type="date"], input[type="number"], select {
-    width: 8em;
-    height: 0.85em;
-    font-size: 0.75rem;
-  }
-
-  textarea {
-    width: 18em;
-    height: 5em;
-    font-size: 8px;
-  }
-}
-
-
-@media only screen and (max-height: 630px) {
-  main { min-height: 100vh; }
-  h2 { font-size: 1rem; }
-  h3 { font-size: 0.8rem; }
-  p { font-size: 0.7rem; }
+@media only screen and (max-width: 600px){
   h1 {
     font-size: 1.2rem;
     text-align: center;
   }
 
-  .group label{
-    font-size: 0.80rem;
-    margin: 0.3em;
+  .group {
+    flex-direction: column;
   }
 
-  .group input[type="date"], input[type="number"], select {
-    width: 10em;
-    height: 0.9em;
+  h2 {
+    font-size: 1.1rem;
   }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+     font-size: .9rem;
+    }
+
+  .group label{
+     font-size: .9rem;
+    }
 
   .buttonArea {
-    justify-content: center;
-    gap: 1em;
-    font-size: 12px;
+    font-size: .9rem;
+    padding-inline: .7em;
   }
-
-  textarea {
-    width: 28em;
-    height: 5em;
-    font-size: 12px;
-  }
-}
-
-@media only screen and (max-width: 580px){
-  main {
-    margin: 1em 5em;
-  }
-
-  h1 {
-    font-size: 0.8rem;
-    text-align: center;
-  }
-  h2 { font-size: 0.7rem; }
-  h3 { font-size: 0.6rem; }
-  p { font-size: 0.5rem; }
-  .group label{ font-size: 0.5rem; }
-  .buttonArea { font-size: 0.5rem; }
 
   .group input[type="date"], input[type="number"], select {
-    width: 11em;
-    height: 0.8em;
-    font-size: 0.5rem;
+    width: 15em;
+    font-size: .9rem;
   }
 
   textarea {
-    width: 18em;
-    height: 5em;
-    font-size: 0.7rem;
+    height: 8em;
+    font-size: .7rem;
   }
 }
 
-@media only screen and (min-width: 720px){
-  main {
-    margin: 0.5em 5em;
-  }
-  footer {
-    margin-top: 1.8em;
-  }
-  .group label{
-    font-size: 1rem;
-    font-weight: 200;
-    margin-bottom: 0.2em;
-  }
-}
-
-@media only screen and (max-height: 1000px){
-  main {
-    min-height: 83vh;
-    max-height: 84vh;
-    margin: 0.5em 5em;
-  }
-  footer {
-    margin-top: 1.8em;
-  }
-  .group label{
-    font-size: 1rem;
-    font-weight: 200;
-    margin-bottom: 0.2em;
-  }
-}
-
-@media only screen and (min-height: 1400px) {
-  main {
-    height: 90vh;
-  }
-
-  h1 {
-    font-size: 4rem;
-  }
-
-  .group label{
-    font-size: 2rem;
-  }
-
-  .buttonArea button {
-    font-size: 1.75rem;
-    margin-bottom: 1.5em;
-    border-radius: 8%;
-  }
-
-}
-
-@media only screen and (min-height: 1800px) {
-  main {
-    height: 92vh;
-  }
-
-  h1 {
-    font-size: 5rem;
-  }
-
-  .group label{
-    font-size: 3rem;
-  }
-
-  .buttonArea button {
-    font-size: 2rem;
-    margin-bottom: 2em;
-    border-radius: 10%;
+@media only screen and (max-width: 425px){
+  .hidden {
+    display: none;
   }
 }

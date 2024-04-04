@@ -1,0 +1,78 @@
+<nav class="navbar">
+  <div class="desktop">
+    <div class="etech-logo">
+      <a (click)="openLinkOnNewWindow('https://www.instagram.com/e_tech.informatica')">
+        <img
+          src="../../../assets/logo-etech.ico"
+          alt="Logo da E-tech informática"
+        />
+      </a>
+    </div>
+    <div class="menu">
+      <ul class="list">
+        <div class="top-itens">
+          <li>
+            <a routerLink="/days-value-calculator" class="menu__button">
+              Calcular dias de acesso
+            </a>
+          </li>
+          <li>
+            <a routerLink="/date-changing" class="menu__button">
+              Mudança de vencimento
+            </a>
+          </li>
+        </div>
+        <div class="bottom-itens">
+          <li>
+            <a routerLink="/about" class="menu__button">
+              Sobre EtechSYS
+            </a>
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mobile">
+    <div class="etech-logo">
+      <a (click)="openLinkOnNewWindow('https://www.instagram.com/e_tech.informatica')">
+        <img
+          src="../../../assets/logo-etech.ico"
+          alt="Logo da E-tech informática"
+        />
+      </a>
+    </div>
+    <div class="menu">
+      <ul class="list">
+        <div class="top-itens">
+          <li>
+            <a
+            (click)="hideMenu()"
+            routerLink="/days-value-calculator"
+            class="menu__button">
+              Calcular dias de acesso
+            </a>
+          </li>
+          <li>
+            <a
+            (click)="hideMenu()"
+            routerLink="/date-changing"
+            class="menu__button">
+              Mudança de vencimento
+            </a>
+          </li>
+        </div>
+        <div class="bottom-itens">
+          <li>
+            <a
+            (click)="hideMenu()"
+            routerLink="/about"
+            class="menu__button">
+              Sobre EtechSYS
+            </a>
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>

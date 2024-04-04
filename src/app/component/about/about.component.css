@@ -1,6 +1,8 @@
-h1, h2, h3 {
-  text-align: center;
+.about {
+  padding: 1em;
 }
 h1, h2, h3, p {
   color: white;
+  margin-bottom: 1em;
+  /* text-align: center; */
 }

@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
@@ -14,25 +13,23 @@ export class DateChangingComponent implements OnInit {
   paper: string = "";
   @ViewChild('resultTextarea') resultTextarea!: ElementRef;
   resultField: string = "";
+  hidden: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public showResult():string {
-    console.log(this.newDate())
-    console.log(this.daysValue())
-    console.log(this.daysDiff())
+  public showResult():void {
 
     if (this.hableToCalculate(
           this.daysDiff(),
           this.dateParts()[2],
-          this.dateParts()[1]) === true)
-      {
-      return this.resultField = this.getResult()
+          this.dateParts()[1]) === true){
+      this.resultField = this.getResult();
+      this.hidden = false
     } else {
-      return this.resultField =`Calculo não pôde ser realizado...Por favor, verifique se os valores estão corretos.`
+      this.resultField =`Calculo não pôde ser realizado...Por favor, verifique se os valores estão corretos.`
    }
 }
 
@@ -88,7 +85,7 @@ export class DateChangingComponent implements OnInit {
     let nextMonth = false
     const todayDate = new Date()
     const today = todayDate.getDate()
-    if( parseInt(this.Rdate) < today ) { nextMonth = true }
+     if (parseInt(this.Rdate) < today) { nextMonth = true }
 
     return nextMonth
   }
@@ -196,7 +193,7 @@ ${this.newDate(2)} – R$${plan},00`
       result =
       `Sobre possível mudança de vencimento, podemos fazer da seguinte forma:
 
-${this.newDate()} – R$${daysValue+paperValue+parseInt(plan)
+${this.newDate()} – R$${daysValue+paperValue
 },00 referente aos dias de acesso + mensalidade ${this.paperToPay()
 } (caso deseje receber um carnê impresso atualizado, a taxa de reimpressão custa R$5,00)
 ${this.newDate(1)} – R$${plan},00`
@@ -224,5 +221,22 @@ ${this.newDate(1)} – R$${plan},00`
     this.Rdate = "";
     this.paper = "";
     this.resultField = "";
+    this.hidden = true;
   }
+
+  public formatDate():string{
+    const day = this.dateParts()[2]
+    let month = `${this.dateParts()[1]}`
+    const year = this.dateParts()[0]
+
+    if (parseInt(month) < 10){
+      month = `0${month}`
+    }
+    let fullDate = `${day}/${month}/${year}`
+
+    return fullDate
+  }
+
 }
+
+

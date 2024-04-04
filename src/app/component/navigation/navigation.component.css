@@ -1,0 +1,184 @@
+.navbar {
+  background: var(--mainBackGInverse);
+  height: 100%;
+  width: 200px;
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    height: 100%;
+    .etech-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1em;
+      width: 100%;
+
+      a {
+        width: 50%;
+        opacity: 0.85;
+        transition: 0.5s;
+        img {
+          border-radius: 20px;
+          width: 100%;
+          box-shadow: 5px 5px 10px var(--shadow);
+        }
+      }
+
+      a:hover {
+        opacity: 1;
+        img {
+          box-shadow: 5px 5px 5px var(--shadow);
+        }
+      }
+    }
+  }
+
+  .menu {
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex: 1;
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      list-style: none;
+
+      li {
+        margin-block-end: 1em;
+
+        .menu__button {
+          background-color: var(--halfwhite);
+          color: var(--font-darkBlue);
+          text-decoration: none;
+          opacity: 0.8;
+          display: flex;
+          flex-direction: column;
+          padding-block: 0.7em;
+          padding-inline: 0.5em;
+          margin-bottom: 1em;
+          border: 1px solid transparent;
+          border-radius: 2px;
+          box-shadow: 2px 2px 2px var(--shadow);
+          cursor: pointer;
+          transition: 0.5s;
+        }
+
+        .menu__button:hover {
+          opacity: 1;
+          border: 1px solid var(--white);
+          box-shadow: 3px 3px 5px var(--shadow);
+        }
+
+        .menu__button:active {
+          background-color: var(--lightBlueBg);
+          color: var(--mainBlack);
+          box-shadow: inset 2px 2px 2px var(--shadow);
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    width: 130px;
+    .desktop {
+      .menu {
+        ul {
+          li {
+            .menu__button {
+              font-size: 0.6rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  /* mudar estrutura para as menores telas */
+  .navbar {
+    width: 100%;
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      padding: 1em;
+      height: 100%;
+
+      .etech-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        a {
+          width: 50%;
+          opacity: 0.85;
+          transition: 0.5s;
+          img {
+            border-radius: 20px;
+            width: 100%;
+            box-shadow: 5px 5px 10px var(--shadow);
+          }
+        }
+
+        a:hover {
+          opacity: 1;
+          img {
+            box-shadow: 5px 5px 5px var(--shadow);
+          }
+        }
+      }
+
+      .menu {
+        font-size: 1.2rem;
+        font-weight: 600;
+        .list {
+          justify-content: flex-start;
+          height: 100%;
+          list-style: none;
+          li {
+            .menu__button {
+              background-color: var(--halfwhite);
+              color: var(--font-darkBlue);
+              text-decoration: none;
+              opacity: 0.8;
+              padding-block: 1.5em;
+              padding-inline: 1em;
+              margin-bottom: 1em;
+              border: 1px solid transparent;
+              border-radius: 5px;
+              box-shadow: 2px 2px 2px var(--shadow);
+              cursor: pointer;
+              transition: 0.5s;
+            }
+
+            .menu__button:hover {
+              opacity: 1;
+              border: 1px solid var(--white);
+              box-shadow: 3px 3px 5px var(--shadow);
+            }
+
+            .menu__button:active {
+              background-color: var(--lightBlueBg);
+              color: var(--mainBlack);
+              box-shadow: inset 2px 2px 2px var(--shadow);
+            }
+          }
+        }
+      }
+    }
+  }
+}

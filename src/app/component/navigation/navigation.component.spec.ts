@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MheaderComponent } from './mheader.component';
+import { NavigationComponent } from './navigation.component';
 
-describe('MheaderComponent', () => {
-  let component: MheaderComponent;
-  let fixture: ComponentFixture<MheaderComponent>;
+describe('NavigationComponent', () => {
+  let component: NavigationComponent;
+  let fixture: ComponentFixture<NavigationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MheaderComponent ]
+      declarations: [ NavigationComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MheaderComponent);
+    fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

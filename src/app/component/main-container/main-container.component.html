@@ -1,0 +1,15 @@
+<div class="container">
+  <main class="main">
+    <app-navigation
+      ngClass="{{ menu }}"
+      (hideMenuEvent)="hideMenu()"
+      class="header">
+    </app-navigation>
+    <div ngClass="{{ router }}" class="router">
+      <app-button-back-to-menu (showMenuEvent)="showMenu()" class="menu-button">
+      </app-button-back-to-menu>
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <app-footer class="footer"></app-footer>
+</div>
